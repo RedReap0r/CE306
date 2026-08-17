@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรแกรมแปลงสกุลเงิน</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .currency-converter {
+            max-width: 500px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            display: inline-block;
+            width: 120px;
+        }
+        .history-section {
+            margin-top: 20px;
+        }
+        .history-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .history-list li {
+            padding: 4px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .update-time {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>โปรแกรมแปลงสกุลเงิน</h1>
+    
+    <div class="currency-converter">
+        <!-- ช่องใส่เงินต้นทาง (amount-one) -->
+        <div class="input-group">
+            <label for="amount-one">จำนวนเงิน (ต้นทาง):</label>
+            <input type="number" id="amount-one" placeholder="กรอกจำนวนเงิน">
+            <select id="currency-one">
+                <option value="THB">บาท (THB)</option>
+                <option value="USD">ดอลลาร์สหรัฐ (USD)</option>
+                <option value="EUR">ยูโร (EUR)</option>
+            </select>
+        </div>
+
+        <!-- ช่องใส่เงินปลายทาง (amount-two) - โจทย์ที่ 1 -->
+        <div class="input-group">
+            <label for="amount-two">จำนวนเงิน (ปลายทาง):</label>
+            <input type="number" id="amount-two" placeholder="กรอกจำนวนเงิน">
+            <select id="currency-two">
+                <option value="THB">บาท (THB)</option>
+                <option value="USD" selected>ดอลลาร์สหรัฐ (USD)</option>
+                <option value="EUR">ยูโร (EUR)</option>
+            </select>
+        </div>
+
+        <!-- ข้อความแสดงอัตราแลกเปลี่ยน -->
+        <p id="rate-text">อัตราแลกเปลี่ยน: 1 THB = 0.028 USD</p>
+
+        <!-- โจทย์ที่ 3: ปุ่มล้างข้อมูล -->
+        <button id="clear-btn">ล้างข้อมูล</button>
+
+        <!-- โจทย์ที่ 4: แสดงเวลาที่อัปเดตล่าสุด -->
+        <div class="update-time" id="update-time">เวลาอัปเดตล่าสุด: -</div>
+    </div>
+
+    <hr>
+
+    <!-- โจทย์ที่ 2: สร้างประวัติการแปลงเงิน -->
+    <div class="history-section">
+        <h3>ประวัติการแปลงเงินย้อนหลัง 10 รายการล่าสุด</h3>
+        <button id="clear-history-btn">ล้างประวัติ</button>
+        <ul id="history-list" class="history-list"></ul>
+    </div>
+
+    <script>
+        // อัตราแลกเปลี่ยนอ้างอิง (เทียบกับ THB)
+        const exchangeRates = {
+            THB: 1,
+            USD: 0.030,
+            EUR: 0.026
+        };
+
+        const amountOne = document.getElementById('amount-one');
+        const amountTwo = document.getElementById('amount-two');
+        const currencyOne = document.getElementById('currency-one');
+        const currencyTwo = document.getElementById('currency-two');
+        const rateText = document.getElementById('rate-text');
+        const clearBtn = document.getElementById('clear-btn');
+        const updateTime = document.getElementById('update-time');
+        const historyList = document.getElementById('history-list');
+        const clearHistoryBtn = document.getElementById('clear-history-btn');
+
+        let historyData = [];
+
+        // ฟังก์ชันอัปเดตข้อความอัตราแลกเปลี่ยนและเวลา (โจทย์ที่ 4)
+        function updateRateAndTimestamp() {
+            const rate = (exchangeRates[currencyTwo.value] / exchangeRates[currencyOne.value]).toFixed(4);
+            rateText.textContent = `อัตราแลกเปลี่ยน: 1 ${currencyOne.value} = ${rate} ${currencyTwo.value}`;
+            
+            const now = new Date();
+            updateTime.textContent = `เวลาอัปเดตล่าสุด: ${now.toLocaleTimeString('th-TH')} (${now.toLocaleDateString('th-TH')})`;
+        }
+
+        // โจทย์ที่ 1: คำนวณจากต้นทางไปปลายทาง (amount-one -> amount-two)
+        function calculateFromOne() {
+            const valOne = parseFloat(amountOne.value);
+            if (isNaN(valOne) || valOne <= 0) {
+                amountTwo.value = '';
+                return;
+            }
+            const valInTHB = valOne / exchangeRates[currencyOne.value];
+            const result = valInTHB * exchangeRates[currencyTwo.value];
+            amountTwo.value = result.toFixed(2);
+
+            addHistory(valOne, currencyOne.value, result.toFixed(2), currencyTwo.value);
+            updateRateAndTimestamp();
+        }
+
+        // โจทย์ที่ 1: คำนวณย้อนหลังจากปลายทางมาต้นทาง (amount-two -> amount-one)
+        function calculateFromTwo() {
+            const valTwo = parseFloat(amountTwo.value);
+            if (isNaN(valTwo) || valTwo <= 0) {
+                amountOne.value = '';
+                return;
+            }
+            const valInTHB = valTwo / exchangeRates[currencyTwo.value];
+            const result = valInTHB * exchangeRates[currencyOne.value];
+            amountOne.value = result.toFixed(2);
+
+            addHistory(result.toFixed(2), currencyOne.value, valTwo, currencyTwo.value);
+            updateRateAndTimestamp();
+        }
+
+        // โจทย์ที่ 2: บันทึกและแสดงประวัติ 10 รายการล่าสุด
+        function addHistory(fromVal, fromCurr, toVal, toCurr) {
+            const record = `${fromVal} ${fromCurr} → ${toVal} ${toCurr}`;
+            
+            // ป้องกันบันทึกรายการซ้ำเดิมติดๆ กัน
+            if (historyData[0] === record) return;
+
+            historyData.unshift(record); // เพิ่มไว้บนสุด
+            if (historyData.length > 10) {
+                historyData.pop(); // เก็บไม่เกิน 10 รายการ
+            }
+
+            renderHistory();
+        }
+
+        function renderHistory() {
+            historyList.innerHTML = '';
+            historyData.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                historyList.appendChild(li);
+            });
+        }
+
+        // โจทย์ที่ 3: ล้างข้อมูล
+        clearBtn.addEventListener('click', () => {
+            amountOne.value = '';
+            amountTwo.value = '';
+            currencyOne.value = 'THB';
+            currencyTwo.value = 'USD';
+            updateRateAndTimestamp();
+        });
+
+        // ล้างประวัติการแปลงเงิน
+        clearHistoryBtn.addEventListener('click', () => {
+            historyData = [];
+            renderHistory();
+        });
+
+        // Event Listeners สำหรับการพิมพ์และเลือกสกุลเงิน
+        amountOne.addEventListener('input', calculateFromOne);
+        amountTwo.addEventListener('input', calculateFromTwo);
+        currencyOne.addEventListener('change', calculateFromOne);
+        currencyTwo.addEventListener('change', calculateFromTwo);
+
+        // เริ่มต้นแสดงเวลาและอัตราแลกเปลี่ยนเมื่อโหลดหน้า
+        updateRateAndTimestamp();
+    </script>
+</body>
+</html>
