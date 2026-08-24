@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรแกรมบัญชีรายรับ-รายจ่าย</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h2>บัญชีรายรับ-รายจ่าย</h2>
+    <div class="summary">
+        <div>
+            <h4>ยอดคงเหลือ</h4>
+            <h2 id="balance">฿0.00</h2>
+        </div>
+        <div>
+            <p>รายรับ: <span id="money-plus" class="income">+฿0.00</span></p>
+            <p>รายจ่าย: <span id="money-minus" class="expense">-฿0.00</span></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="search">ค้นหารายการ: </label>
+        <input type="text" id="search" placeholder="พิมพ์เพื่อค้นหา..." oninput="filterTransactions(this.value)">
+    </div>
+
+    <h3>ประวัติรายการ</h3>
+    
+    <!-- โจทย์ที่ 3: แสดงประวัติรายการทั้งหมด -->
+    <ul id="list" style="padding-left: 0; list-style: none;">
+    </ul>
+
+    <button class="clear-btn" onclick="clearAllData()">ล้างข้อมูลทั้งหมด</button>
+
+    <hr style="margin: 20px 0;">
+
+    <h3>เพิ่มรายการใหม่</h3>
+    <form id="form" onsubmit="addTransaction(event)">
+        <div class="form-group">
+            <label for="text">ชื่อรายการ: </label>
+            <input type="text" id="text" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="amount">จำนวนเงิน (ใส่เครื่องหมาย - ถ้ารายจ่าย): </label>
+            <input type="number" id="amount" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="category">หมวดหมู่: </label>
+            <select id="category" required>
+                <option value="" disabled selected>เลือกหมวดหมู่...</option>
+                <option value="อาหาร">อาหาร</option>
+                <option value="เดินทาง">เดินทาง</option>
+                <option value="ช้อปปิ้ง">ช้อปปิ้ง</option>
+                <option value="เงินเดือน">เงินเดือน</option>
+                <option value="อื่นๆ">อื่นๆ</option>
+            </select>
+        </div>
+        
+        <button type="submit">เพิ่มธุรกรรม</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
