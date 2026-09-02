@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My-Movie-Zone - หน้าแรก</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="site-header" data-bs-theme="dark">
+        <div class="container">
+            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom border-secondary">
+               <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-film me-3 text-warning" viewBox="0 0 16 16">
+                        <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm4 0v6h8V1zm8 8H4v6h8zM1 1v2h2V1zm2 3H1v2h2zm-2 3v2h2V7zm2 3H1v2h2zm-2 3v2h2v-2zM15 1h-2v2h2zm-2 3v2h2V4zm2 3h-2v2h2zm-2 3v2h2v-2zm2 3h-2v2h2z"/>
+                    </svg>
+                    <span class="fs-4 fw-bold">MovieZone</span>
+                </a>
+
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
+                    <li class="nav-item"><a href="movies.html" class="nav-link">Movies</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                </ul>
+            </header>
+        </div>
+    </div>
+
+    <header class="hero-banner text-white text-center py-5 mx-3 mx-lg-auto mt-4 container">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold">ยินดีต้อนรับสู่ MovieZone</h1>
+            <p class="lead">แหล่งรวมรีวิวและข้อมูลภาพยนตร์ที่น่าสนใจสำหรับคุณ</p>
+            <a href="movies.html" class="btn btn-warning btn-lg mt-3">ดูรายชื่อภาพยนตร์</a>
+        </div>
+    </header>
+
+    <div class="container mt-5 mb-5">
+        <h2 class="section-heading text-center">🔥 ภาพยนตร์มาแรง</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="movie-card card h-100">
+                    <img src="images/Dune-Part-Two.jpg" class="card-img-top" alt="Movie 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Dune: Part Two</h5>
+                        <p class="card-text">มหากาพย์ไซไฟฟอร์มยักษ์ การเดินทางเพื่อแก้แค้นและปกป้องจักรวาล</p>
+                        <span class="badge bg-primary">Sci-Fi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="movie-card card h-100">
+                    <img src="images/Oppenheimer.jpg" class="card-img-top" alt="Movie 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Oppenheimer</h5>
+                        <p class="card-text">เรื่องราวของบิดาแห่งระเบิดปรมาณู ผลงานกำกับโดย Christopher Nolan</p>
+                        <span class="badge bg-danger">Drama</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="movie-card card h-100">
+                    <img src="images/Godzilla-Minus-One.jpg" class="card-img-top" alt="Movie 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Godzilla Minus One</h5>
+                        <p class="card-text">การกลับมาของราชันย์แห่งมอนสเตอร์ในยุคหลังสงครามโลก</p>
+                        <span class="badge bg-success">Action</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer text-center">
+        <p class="mb-0">&copy; 2024 MovieZone. Assignment 4 - My Interest Website.</p>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
