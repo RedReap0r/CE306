@@ -23,10 +23,24 @@
         --font-display: "Leelawadee UI", Tahoma, sans-serif;
         --radius-card: 1.5rem;
     }
+
+    @layer base {
+        html { color-scheme: light; }
+        html.dark { color-scheme: dark; }
+        body { font-family: var(--font-display); }
+        ::selection { background-color: color-mix(in oklch , var(--color-brand-400) 40%, transparent); }
+    }
   </style>
+</head>
+
+<body class="min-h-screen overflow-x-hidden bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:test-slate-100">
+    <a href="#main-content" class="sr-only z-50 rounded-lg bg-white px-4 py-3 font-bold text-slate-950"
+
   <link href="./output.css" rel="stylesheet">
 </head>
 <body>
+
   <h1 class="text-3xl font-bold underline">Hello world!</h1>
+
 </body>
 </html>
