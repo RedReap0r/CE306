@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมทายตัวเลขปริศนา</title>
+    <!-- นี่ไง! เราดึงไฟล์ CSS ที่คอมพิวเตอร์แปลงร่างให้เรามาใช้แล้ว -->
+    <link href="./output.css" rel="stylesheet">
+</head>
+<body class="bg-blue-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen flex items-center justify-center p-4 transition-colors duration-300">
+    
+    <main class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl w-full max-w-md forced-colors:outline">
+        <header class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">เกมทายตัวเลข</h1>
+            <p class="text-lg font-semibold">Level <span id="level-display" class="text-green-500">1</span></p>
+        </header>
+
+        <div class="mb-6 text-center">
+            <button id="btn-rules" class="text-sm bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-3 py-1 rounded-full transition-colors motion-reduce:transition-none focus:ring-2 focus:ring-blue-400">
+                📖 วิธีเล่นและกติกา
+            </button>
+            <div id="rules-box" class="hidden mt-3 bg-blue-100 dark:bg-gray-700 p-4 rounded-lg text-sm text-left shadow-inner">
+                <p><strong>กติกา:</strong> ทายตัวเลขที่ซ่อนอยู่ให้ถูกต้องภายใน 5 ครั้ง!</p>
+                <ul class="list-disc ml-5 mt-2">
+                    <li>Level 1: สุ่มเลข 1 ถึง 10</li>
+                    <li>Level 2: สุ่มเลข 1 ถึง 50</li>
+                    <li>Level 3: สุ่มเลข 1 ถึง 100</li>
+                </ul>
+            </div>
+        </div>
+
+        <form id="game-form" class="flex flex-col gap-4">
+            <label for="guess-input" class="sr-only">ใส่ตัวเลขของคุณ</label>
+            <input type="number" id="guess-input" min="1" required
+                class="w-full border-2 border-gray-300 dark:border-gray-600 rounded-xl p-4 text-center text-2xl dark:bg-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900 transition-all motion-reduce:transition-none"
+                placeholder="ใส่ตัวเลขที่นี่...">
+            
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all motion-reduce:transition-none motion-reduce:transform-none focus:ring-4 focus:ring-blue-300 forced-colors:border-2">
+                ทายเลย! (หรือกด Enter)
+            </button>
+        </form>
+
+        <div id="message" class="mt-6 text-center text-xl font-bold h-8">พร้อมแล้วเริ่มเลย!</div>
+        <div class="text-center mt-2 text-gray-500 dark:text-gray-400">เหลือโอกาส: <span id="lives-display" class="font-bold text-red-500 text-lg">5</span> ครั้ง</div>
+
+        <div class="mt-8 flex gap-3">
+            <button id="btn-restart" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 rounded-xl transition-colors motion-reduce:transition-none forced-colors:border-2">
+                🔄 เริ่มใหม่
+            </button>
+            <button id="btn-level-up" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition-colors motion-reduce:transition-none forced-colors:border-2">
+                ⭐ เพิ่ม Level
+            </button>
+        </div>
+    </main>
+
+    <!-- เรียกใช้ไฟล์ JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
