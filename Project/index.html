@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>ComTrade – คอมเทรด</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <span class="logo">ComTrade</span>
+      <nav>
+        <a href="#">หน้าแรก</a><a href="#shop">สินค้า</a><a href="#">ฝากขาย</a
+        ><a href="#">ติดต่อ</a>
+      </nav>
+      <button class="btn ghost" id="openCart" aria-label="เปิดตะกร้า">
+        ตะกร้า (<span id="cnt">0</span>)
+      </button>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>ซื้อคอมพิวเตอร์มือสอง<br />เลือกสเปกที่ใช่ ได้ในไม่กี่นาที</h1>
+        <p>
+          กรองตาม RAM, การ์ดจอ และสภาพเครื่อง ดูรายละเอียดชัดเจน
+          สั่งซื้อหรือจองได้ทันที
+        </p>
+        <a
+          class="btn"
+          href="#shop"
+          style="text-decoration: none; display: inline-block"
+          >ดูสินค้าทั้งหมด</a
+        >
+        <div class="stats">
+          <div><b>24,000+</b><span>ผู้ใช้งาน</span></div>
+          <div><b>8,500+</b><span>สินค้าพร้อมขาย</span></div>
+        </div>
+      </div>
+      <div class="hero-art" role="img" aria-label="ภาพประกอบ">
+        ภาพ Hero (รอใส่จากดีไซน์ Figma)
+      </div>
+    </section>
+
+    <main id="shop">
+      <h2>สินค้าทั้งหมด</h2>
+      <p class="sub">
+        เลือกตัวกรองด้านข้าง รายการจะอัปเดตทันทีโดยไม่โหลดหน้าใหม่
+      </p>
+      <div class="layout">
+        <aside aria-label="ตัวกรอง">
+          <label
+            >ค้นหา<input type="text" id="q" placeholder="เช่น MacBook, RTX"
+          /></label>
+          <label
+            >ประเภท<select id="cat">
+              <option value="">ทั้งหมด</option>
+              <option>โน้ตบุ๊ก</option>
+              <option>เดสก์ท็อป</option>
+              <option>จอมอนิเตอร์</option>
+              <option>การ์ดจอ</option>
+            </select></label
+          >
+          <label
+            >RAM<select id="ram">
+              <option value="">ทั้งหมด</option>
+              <option value="8">8 GB ขึ้นไป</option>
+              <option value="16">16 GB ขึ้นไป</option>
+              <option value="32">32 GB ขึ้นไป</option>
+            </select></label
+          >
+          <label
+            >การ์ดจอ<select id="gpu">
+              <option value="">ทั้งหมด</option>
+              <option>RTX</option>
+              <option>GTX</option>
+              <option>Radeon</option>
+              <option>Integrated</option>
+            </select></label
+          >
+          <label
+            >สภาพเครื่อง ≥ <span id="condV">80</span>%<input
+              type="range"
+              id="cond"
+              min="70"
+              max="100"
+              value="80"
+          /></label>
+          <label
+            >ราคาไม่เกิน <span id="priceV">60,000</span> บาท<input
+              type="range"
+              id="price"
+              min="5000"
+              max="60000"
+              step="1000"
+              value="60000"
+          /></label>
+        </aside>
+        <div>
+          <div class="meta">
+            <span id="count"></span><span class="timing" id="timing"></span>
+          </div>
+          <div class="grid" id="grid" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <section class="roadmap">
+        <h2 style="margin-top: 0">ความคืบหน้าโครงงาน</h2>
+        <ul>
+          <li>ออกแบบ UI ใน Figma</li>
+          <li>หน้าแรกและรายการสินค้า</li>
+          <li>ตัวกรองแบบ Dynamic (Fetch + Partial Render)</li>
+          <li>ตะกร้าและสรุปราคาแบบ Real-time</li>
+          <li class="todo">Backend: Node.js + REST API</li>
+          <li class="todo">ฐานข้อมูล PostgreSQL / MySQL</li>
+          <li class="todo">สมัครสมาชิก/เข้าสู่ระบบ (JWT)</li>
+          <li class="todo">หน้า Admin จัดการสินค้า (CRUD)</li>
+          <li class="todo">สั่งซื้อและประวัติคำสั่งซื้อ</li>
+        </ul>
+      </section>
+    </main>
+
+    <aside class="cart" id="cart" aria-label="ตะกร้าสินค้า">
+      <div class="row">
+        <b>ตะกร้าของคุณ</b><button class="btn ghost" id="closeCart">ปิด</button>
+      </div>
+      <div class="items" id="items"></div>
+      <div class="sum">
+        <div class="row"><span>ราคาสินค้า</span><span id="sub">฿0</span></div>
+        <div class="row"><span>ค่าจัดส่ง</span><span id="ship">฿0</span></div>
+        <div class="row total">
+          <span>รวมทั้งหมด</span><span id="tot">฿0</span>
+        </div>
+      </div>
+      <button class="btn" id="checkout">สั่งซื้อ (รอเชื่อม API)</button>
+    </aside>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
