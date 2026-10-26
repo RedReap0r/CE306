@@ -101,6 +101,20 @@ var DB = [
     spec: "พัดลมเปลี่ยนใหม่ | ผ่านการทดสอบโหลด",
   },
 ];
+var IMG = {
+  1: "macbook-pro-14.jpg",
+  2: "intel-i7-rtx4070.jpg",
+  3: "dell-ultrasharp-34.jpg",
+  4: "asus-rog-rtx3080.jpg",
+  5: "lenovo-thinkpad-t14.jpg",
+  6: "hp-omen-15.jpg",
+  7: "ryzen5-rx6600.jpg",
+  8: "lg-27gl850.jpg",
+  9: "msi-katana-rtx4060.jpg",
+};
+DB.forEach(function (x) {
+  if (IMG[x.id]) x.img = "images/" + IMG[x.id];
+});
 var $ = function (i) {
   return document.getElementById(i);
 };
@@ -148,7 +162,7 @@ function render(list, ms) {
         .map(function (x) {
           return (
             '<article class="card"><div class="thumb">' +
-            x.cat +
+            (x.img ? '<img src="' + x.img + '" alt="' + x.name + '">' : x.cat) +
             '</div><div class="in"><span class="tag">สภาพ ' +
             x.cond +
             "%</span><h3>" +
