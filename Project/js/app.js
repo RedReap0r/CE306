@@ -252,5 +252,99 @@ $("closeCart").onclick = function () {
 $("checkout").onclick = function () {
   alert("ฟีเจอร์สั่งซื้อจะเชื่อมกับ POST /api/orders ในขั้นถัดไป");
 };
+function drawStats() {
+  var cats = {},
+    sum = 0;
+  DB.forEach(function (x) {
+    cats[x.cat] = 1;
+    sum += x.cond;
+  });
+  $("statProducts").textContent = DB.length;
+  $("statCats").textContent = Object.keys(cats).length;
+  $("statCond").textContent =
+    (DB.length ? Math.round(sum / DB.length) : 0) + "%";
+}
+drawStats();
+var authMode = "login";
+function sha(s) {
+  return crypto.subtle
+    .digest("SHA-256", new TextEncoder().encode(s))
+    .then(function (b) {
+      return Array.from(new Uint8Array(b))
+        .map(function (x) {
+          return x.toString(16).padStart(2, "0");
+        })
+        .join("");
+    });
+}
+function getUsers() {
+  try {
+    return JSON.parse(localStorage.getItem("users") || "{}");
+  } catch (e) {
+    return {};
+  }
+}
+function authUI() {
+  var me = localStorage.getItem("me");
+  $("userName").hidden = !me;
+  $("userName").textContent = me || "";
+  $("logoutBtn").hidden = !me;
+  $("loginBtn").hidden = !!me;
+  $("signupBtn").hidden = !!me;
+}
+function openAuth(mode) {
+  authMode = mode;
+  var l = mode === "login";
+  $("authTitle").textContent = l ? "เข้าสู่ระบบ" : "สมัครสมาชิก";
+  $("authGo").textContent = l ? "เข้าสู่ระบบ" : "สมัครสมาชิก";
+  $("authSwap").textContent = l
+    ? "ยังไม่มีบัญชี? สมัครสมาชิก"
+    : "มีบัญชีแล้ว? เข้าสู่ระบบ";
+  $("authErr").textContent = "";
+  if (!$("authDialog").open) $("authDialog").showModal();
+}
+$("loginBtn").onclick = function () {
+  openAuth("login");
+};
+$("signupBtn").onclick = function () {
+  openAuth("register");
+};
+$("authSwap").onclick = function () {
+  openAuth(authMode === "login" ? "register" : "login");
+};
+$("authClose").onclick = function () {
+  $("authDialog").close();
+};
+$("logoutBtn").onclick = function () {
+  localStorage.removeItem("me");
+  authUI();
+};
+$("authGo").onclick = function () {
+  var email = $("authEmail").value.trim().toLowerCase(),
+    pass = $("authPass").value;
+  if (!/^\S+@\S+\.\S+$/.test(email) || pass.length < 6) {
+    $("authErr").textContent = "อีเมลไม่ถูกต้อง หรือรหัสผ่านสั้นกว่า 6 ตัว";
+    return;
+  }
+  sha(pass).then(function (h) {
+    var users = getUsers();
+    if (authMode === "register") {
+      if (users[email]) {
+        $("authErr").textContent = "อีเมลนี้ถูกใช้แล้ว";
+        return;
+      }
+      users[email] = h;
+      localStorage.setItem("users", JSON.stringify(users));
+    } else if (users[email] !== h) {
+      $("authErr").textContent = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
+      return;
+    }
+    localStorage.setItem("me", email);
+    $("authPass").value = "";
+    $("authDialog").close();
+    authUI();
+  });
+};
+authUI();
 drawCart();
 load();

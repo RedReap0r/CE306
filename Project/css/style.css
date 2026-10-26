@@ -253,3 +253,43 @@ img.hero-art {
   height: 160px;
   object-fit: cover;
 }
+[hidden] {
+  display: none !important;
+}
+.auth-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#userName {
+  color: var(--muted);
+  font-size: 14px;
+}
+dialog {
+  min-width: 300px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+dialog h3 {
+  margin-top: 0;
+}
+.auth-form {
+  display: grid;
+  gap: 10px;
+}
+.auth-form input {
+  padding: 8px;
+  border: 1px solid var(--line);
+}
+.auth-err {
+  min-height: 1.2em;
+  margin: 0;
+  color: #dc2626;
+  font-size: 14px;
+}
+@media (max-width: 760px) {
+  #userName {
+    display: none;
+  }
+}

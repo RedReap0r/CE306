@@ -20,6 +20,12 @@
         <a href="#">หน้าแรก</a><a href="#shop">สินค้า</a><a href="#">ฝากขาย</a
         ><a href="#">ติดต่อ</a>
       </nav>
+      <div class="auth-box">
+        <span id="userName" hidden></span>
+        <button class="btn ghost" id="loginBtn">เข้าสู่ระบบ</button>
+        <button class="btn" id="signupBtn">สมัครสมาชิก</button>
+        <button class="btn ghost" id="logoutBtn" hidden>ออกจากระบบ</button>
+      </div>
       <button class="btn ghost" id="openCart" aria-label="เปิดตะกร้า">
         ตะกร้า (<span id="cnt">0</span>)
       </button>
@@ -39,8 +45,9 @@
           >ดูสินค้าทั้งหมด</a
         >
         <div class="stats">
-          <div><b>24,000+</b><span>ผู้ใช้งาน</span></div>
-          <div><b>8,500+</b><span>สินค้าพร้อมขาย</span></div>
+          <div><b id="statProducts">0</b><span>สินค้าพร้อมขาย</span></div>
+          <div><b id="statCats">0</b><span>ประเภทสินค้า</span></div>
+          <div><b id="statCond">0%</b><span>สภาพเครื่องเฉลี่ย</span></div>
         </div>
       </div>
       <img
@@ -142,6 +149,29 @@
       </div>
       <button class="btn" id="checkout">สั่งซื้อ (รอเชื่อม API)</button>
     </aside>
+    <dialog id="authDialog">
+      <h3 id="authTitle">เข้าสู่ระบบ</h3>
+      <div class="auth-form">
+        <input
+          type="email"
+          id="authEmail"
+          placeholder="อีเมล"
+          autocomplete="email"
+        />
+        <input
+          type="password"
+          id="authPass"
+          placeholder="รหัสผ่าน (อย่างน้อย 6 ตัว)"
+          autocomplete="current-password"
+        />
+        <p id="authErr" class="auth-err"></p>
+        <button class="btn" id="authGo">เข้าสู่ระบบ</button>
+        <button class="btn ghost" id="authSwap">
+          ยังไม่มีบัญชี? สมัครสมาชิก
+        </button>
+        <button class="btn ghost" id="authClose">ปิด</button>
+      </div>
+    </dialog>
 
     <script src="js/app.js"></script>
   </body>
